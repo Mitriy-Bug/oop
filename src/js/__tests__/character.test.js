@@ -29,20 +29,35 @@ test('Test levelUp', () => {
     character.levelUp();
     expect(character).toEqual({ name: "Майор", type: "Zombie", health: 100, level: 2, attack: 48, defence: 12 });
 });
+test('Test levelUp 2', () => {
+    expect(
+        () => {
+            const character = new Character("Майор", 'Zombie');
+            character.health = -20;
+            character.levelUp();
+        }).toThrow(Error('Нельзя повысить левел умершего персонажа'));
+});
 test('Test damage', () => {
     const character = new Character("Майор", 'Zombie');
     character.damage(100);
     expect(character).toEqual({ name: "Майор", type: "Zombie", health: 10, level: 1, attack: 40, defence: 10 });
 });
-test('Test Некорректный тип персонажа', () => {
-    expect(() => {
-        new Character("Майор", 'Rombie')
-    }).toThrow('Некорректный тип персонажа');
-});
-test('Test Некорректное имя персонажа', () => {
+test('Test damage 2', () => {
     expect(
         () => {
-            new Character(8798987, 'Zombie')
-        }
-    ).toThrow(Error('Некорректное имя персонажа'));
+            const character = new Character("Майор", 'Zombie');
+            character.health = -20;
+            character.damage(100);
+        }).toThrow(Error('Нельзя понизить уровень жизни умершего персонажа'));
+});
+test('Test damage', () => {
+    const character = new Character("Майор", 'Zombie');
+    character.damage(500);
+    expect(character).toEqual({ name: "Майор", type: "Zombie", health: 0, level: 1, attack: 40, defence: 10 });
+});
+test('Test Некорректный тип персонажа', () => {
+    expect(()=>new Character("Майор", 'Rombie')).toThrow('Некорректный тип персонажа');
+});
+test('Test Некорректное имя персонажа', ()=>{
+    expect(()=>new Character(8798987, 'Zombie')).toThrow(Error('Некорректное имя персонажа'));
 });

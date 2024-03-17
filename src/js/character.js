@@ -27,7 +27,7 @@ export default class Character {
         } else if (type === 'Zombie') {
             this.attack = arrAttackDefence[4][0];
             this.defence = arrAttackDefence[4][1];
-        } else if (type === 'Daemon') {
+        } if (type === 'Daemon') {
             this.attack = arrAttackDefence[5][0];
             this.defence = arrAttackDefence[5][1];
         }
@@ -38,11 +38,19 @@ export default class Character {
             this.health = 100;
             this.attack += this.attack  * 0.20;
             this.defence += this.defence  * 0.20;
+        } else {
+            throw new Error('Нельзя повысить левел умершего персонажа');
         }
     }
     damage(points) {
         if (this.health > 0) {
             this.health -= points * (1 - this.defence / 100);
+            if (this.health <= 0) {
+                this.health = 0;
+            }
+        } else {
+            throw new Error('Нельзя понизить уровень жизни умершего персонажа');
         }
+
     }
 }
