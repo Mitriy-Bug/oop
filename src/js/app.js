@@ -3,7 +3,7 @@
 import Character from './character';
 
 //console.log(sum([1, 2]));
-let character = new Character("Майор", 'Rombie')
+let character = new Character("Майор", 'Zombie')
 console.log(character);
 character.levelUp();
 console.log(character);
